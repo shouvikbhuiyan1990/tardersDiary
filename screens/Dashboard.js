@@ -32,16 +32,22 @@ export default class Dashboard extends React.Component {
         
     }
 
-    getShareDetails = () => {
-        alert('')
-        fetch('http://localhost:3000/data')
-        .then(response => response.json())
-        .then(json => {
+    getShareDetails = (sharename, isemptydetails) => {
+        if(!isemptydetails) {
+            fetch('http://localhost:3000/data')
+            .then(response => response.json())
+            .then(json => {
+                this.setState({
+                    stockDetails: json[0]['Time Series (Daily)'][Object.keys(json[0]['Time Series (Daily)'])[0]]
+                });
+            })
+            .catch(e => console.log(e))
+        }
+        else {
             this.setState({
-                stockDetails: json[0]['Time Series (Daily)'][Object.keys(json[0]['Time Series (Daily)'])[0]]
+                stockDetails: {}
             });
-        })
-        .catch(e => console.log(e))
+        }
     }
 
     render() {

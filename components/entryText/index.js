@@ -10,6 +10,7 @@ import {debounce} from 'underscore';
 
 import styles from './style';
 import TradeContext from '../../constants/context';
+import SupportResistance from '../supportResistance';
 
 export default class EntryText extends React.Component {
 
@@ -41,6 +42,8 @@ export default class EntryText extends React.Component {
 
     onChange = (value) => {
         const { parentProps: { parentMethods } } = this.context;
+        parentMethods.getShareDetails('', true);
+
         this.setState({
             value
         }, () => {
@@ -74,6 +77,7 @@ export default class EntryText extends React.Component {
                         keyExtractor={() => uuidv1()}
                     />
                 </SafeAreaView>
+                <SupportResistance />
             </View>
         )
     }
