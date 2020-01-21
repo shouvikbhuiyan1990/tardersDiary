@@ -3,6 +3,8 @@ import {
     View,
     Text
  } from 'react-native';
+
+import Table from '../common/table';
 import TradeContext from '../../constants/context';
 
 import {
@@ -10,6 +12,7 @@ import {
     calculateResistance,
     calculateDemarkTheory
 } from '../../utils/calc';
+import styles from './styles';
 
 import {
     isEmpty
@@ -27,21 +30,16 @@ export default () => {
 
     return (
         <View>
-            {
-                !isEmpty(stockDetails) && support.map((value, index)=> (
-                    <Text key={index} >{`Support ${index+1} ${value}`}</Text>
-                ))
-            }
-            {
-                !isEmpty(stockDetails) && resistance.map((value, index)=> (
-                    <Text key={index} >{`Resistance ${index+1} ${value}`}</Text>
-                ))
-            }
-            {   !isEmpty(stockDetails)  && 
-                <View>
-                    <Text>{`Predicted High ${demarkTheory.predictedHigh}`}</Text>
-                    <Text>{`Predicted Low ${demarkTheory.predictedLow}`}</Text>
-                </View>
+            {!isEmpty(stockDetails)  &&
+                <React.Fragment> 
+                    <View>
+                        <Text>{`Predicted High for this stock is`}</Text><Text style={styles.greenBold}>{`${demarkTheory.predictedHigh}`}</Text>
+                        <Text>{`Predicted Low for this stock is`}</Text><Text style={styles.redBold}>{`${demarkTheory.predictedLow}`}</Text>
+                    </View>
+                    <Text>The Stock is expected to react to the following levels</Text>
+                    <Table tabledata={support} countText='Support'/>
+                    <Table tabledata={resistance} countText='Resistance'/>
+                </React.Fragment>
             }
         </View>
     )
